@@ -1,76 +1,3 @@
-// --- Datos de productos ---
-// const productos = [
-//     ["Ciberpunk1.jpg", "Neón Metropolitano", 2600, "Un viaje visual por la ciudad iluminada por luces de neón."], 
-//     ["Ciberpunk2.jpg", "Ecos del Futuro", 3100, "Fusión entre tecnología y humanidad en un entorno cibernético."], 
-//     ["Ciberpunk3.jpg", "Sombras Digitales", 2900, "Una visión oscura del futuro urbano."], 
-//     ["Ciberpunk4.jpg", "Ciudad Infinita", 3400, "Inspiración en la expansión sin fin de las urbes futuristas."], 
-//     ["Ciberpunk5.jpg", "Ritmo Eléctrico", 2700, "Reflejo del movimiento urbano y la energía nocturna."], 
-//     ["Ciberpunk6.jpg", "Luz Sintética", 3200, "Tonos eléctricos que representan la vida artificial."], 
-//     ["Ciberpunk7.jpg", "Caos Programado", 3800, "La belleza del desorden dentro del control tecnológico."], 
-//     ["Ciberpunk8.jpg", "Metrópolis Azul", 3300, "Un horizonte urbano envuelto en brillos cobalto."], 
-//     ["Ciberpunk9.jpg", "Reflejo Digital", 3100, "Reflexión moderna del alma digital."], 
-//     ["Ciberpunk10.jpg", "Noche Cibernética", 3500, "La calma dentro del ruido tecnológico."], 
-//     ["Clasico1.png", "Renacimiento Dorado", 5600, "Inspiración en la luz y armonía del arte clásico."], 
-//     ["Clasico2.png", "Cielos Eternos", 5900, "Representación de la divinidad en la pintura tradicional."], 
-//     ["Clasico3.png", "El Jardín de los Dioses", 6200, "Escena mitológica con detalles barrocos."], 
-//     ["Clasico4.png", "Majestad Antigua", 5800, "El poder y la gloria de una época perdida."], 
-//     ["Clasico5.png", "Virtud y Belleza", 5400, "Equilibrio entre humanidad y divinidad."], 
-//     ["Clasico6.png", "El Banquete de los Héroes", 6000, "Recreación de una escena épica."], 
-//     ["Clasico7.png", "Sombras del Imperio", 5700, "Representación dramática del poder clásico."], 
-//     ["Clasico8.png", "Aurora del Arte", 6100, "El amanecer del arte como expresión eterna."], 
-//     ["Clasico9.png", "Melodía de Mármol", 5500, "La suavidad de la piedra convertida en emoción."], 
-//     ["Clasico10.png", "Revelación", 6300, "Una mirada espiritual desde el arte antiguo."], 
-//     ["cubismo1.png", "Fragmentos del Pensamiento", 2700, "Formas geométricas que revelan el alma humana."], 
-//     ["cubismo2.png", "Composición Urbana", 3000, "Líneas que se cruzan en un caos armonioso."], 
-//     ["cubismo3.png", "Rostros de Cristal", 3300, "El reflejo del ser descompuesto en figuras."], 
-//     ["cubismo4.png", "Dimensión Fragmentada", 3200, "Exploración del tiempo y la forma."], 
-//     ["cubismo5.png", "Equilibrio Abstracto", 3100, "Simetría imposible dentro del desorden."], 
-//     ["cubismo6.png", "Visión Interna", 2800, "El ojo que mira más allá de lo visible."], 
-//     ["cubismo7.png", "Ecos Geométricos", 3500, "Movimiento en planos y perspectivas."], 
-//     ["cubismo8.png", "Ruptura y Síntesis", 3600, "Una colisión entre el color y la estructura."], 
-//     ["cubismo9.png", "Códigos del Arte", 3400, "Composición visual que reta la lógica."], 
-//     ["cubismo10.png", "Punto y Línea", 3000, "La simplicidad de lo esencial."], 
-//     ["Luminismo1.png", "Atardecer Dorado", 2400, "La luz del sol en su máxima expresión pictórica."], 
-//     ["Luminismo2.png", "Bruma de Invierno", 2300, "Tonos suaves y atmósfera melancólica."], 
-//     ["Luminismo3.png", "Resplandor del Alba", 2500, "Juego de luces entre la noche y el amanecer."], 
-//     ["Luminismo4.png", "Luz del Horizonte", 2600, "La naturaleza bañada en destellos cálidos."], 
-//     ["Luminismo5.png", "Claridad Serena", 2700, "Paz y pureza en la luz de un nuevo día."], 
-//     ["Surrealismo1.png", "Sueño y Realidad", 3900, "Exploración del subconsciente en colores vivos."], 
-//     ["Surrealismo2.png", "Puerta al Infinito", 4100, "Una conexión entre mundos imposibles."], 
-//     ["Surrealismo3.png", "Silencio de los Relojes", 4200, "El tiempo detenido en la mente del artista."], 
-//     ["Surrealismo4.png", "El Ojo del Caos", 4000, "Una mirada a la locura del pensamiento."], 
-//     ["Surrealismo5.png", "Universo Interior", 4300, "El alma representada en metáforas visuales."], 
-//     ["Surrealismo6.png", "Geometría del Sueño", 4400, "El equilibrio entre lo real y lo ilusorio."], 
-//     ["Surrealismo7.png", "Ecos del Desierto", 4500, "Paisaje onírico que refleja soledad y grandeza."], 
-//     ["Surrealismo8.png", "Sombras Transparentes", 4700, "La luz y la oscuridad en diálogo eterno."], 
-//     ["Surrealismo9.png", "Memoria Líquida", 4600, "El pasado y el presente fundidos en un instante."], 
-//     ["Surrealismo10.png", "Dimensión Oculta", 4800, "La puerta hacia lo desconocido."], 
-//     ["producto1.jpg", "Forma y Silencio", 3100, "Exploración contemporánea del espacio vacío."], 
-//     ["producto 2.jpg", "Trama de Colores", 2900, "Ritmo visual entre textura y movimiento."], 
-//     ["producto3.jpg", "Mirada Intangible", 3300, "Retrato introspectivo con enfoque minimalista."], 
-//     ["mesi1.jpg", "Movimiento Perfecto", 2800, "La fuerza y precisión del instante deportivo."], 
-//     ["mesi2.jpg", "Inspiración en el Juego", 2700, "Captura del talento en movimiento."], 
-//     ["mesi3.jpg", "Pasión y Gloria", 2900, "La energía del deporte convertida en arte."]];
-    
-  // Mapeamos los datos para que tengan el mismo formato que el código original
-  // const allProducts = productos.map((p, i) => {
-  //   return {
-  //       id: 'p' + i,
-  //       img: `./public/img/productos/${p[0]}`, // Usamos el nombre de la imagen de tu array
-  //       title: p[1],
-  //       price: p[2],
-  //       description: p[3],
-  //       rating: Math.floor(Math.random() * 3) + 3 // Asignamos una calificación aleatoria para las estrellas
-  //   };
-  // });
-
-  // const offers = allProducts.slice(0, 10).map(p => {
-  //   const discountPerc = 10 + Math.floor(Math.random() * 21);
-  //   const oldPrice = p.price;
-  //   const newPrice = Math.round(oldPrice * (1 - discountPerc / 100));
-  //   return { ...p, oldPrice, price: newPrice, discountPerc };
-  // });
-
   //VARIABLES
   let allProducts,offers;
 
@@ -135,25 +62,6 @@
     html += `<button id="nextPage" ${page===totalPages?'disabled':''}>Siguiente</button>`;
     paginationEl.innerHTML = html;
   }
-
-  // function renderOffers() {
-  //   offersGrid.innerHTML = offers.map(p => `
-  //     <div class="producto" data-id="${p.id}" data-title="${p.title}" data-price="${p.price}" data-img="${p.img}" data-rating="${p.rating}" data-description="${p.description}">
-  //       <img src="${p.img}" alt="${p.title}">
-  //       <h3>${p.title}</h3>
-  //       <p><del>${formatMoney(p.oldPrice)}</del> ${formatMoney(p.price)}</p>
-  //       ${getStarsHtml(p.rating)}
-  //       <div class="controls">
-  //         <button class="btn btn-add">Agregar</button>
-  //         <button class="btn secondary btn-info">Ver más</button>
-  //       </div>
-  //     </div>
-  //   `).join('');
-  // }
-
-  // renderProductsPage(1);
-  // renderOffers();
-
   // --- Delegación de eventos: añadir al carrito y ver más ---
   let cart = [];
   const cartBtn = document.getElementById("cartBtn");
