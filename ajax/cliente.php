@@ -4,20 +4,23 @@ $cliente = new Cliente ();
 
 #Verificamos si se envia idDepartemento y lo limpiamos. De lo contrario ponemos una cadena vacia
 $nombre = isset($_POST['nombre'])?limpiarCadenas($_POST['nombre']):"";
-$apellido_p = isset($_POST['apellido_pa'])?limpiarCadenas($_POST['apellido_pa']):"";
-$apellido_m = isset($_POST['apellido_ma'])?limpiarCadenas($_POST['apellido_ma']):"";
-$correo = isset($_POST['correo'])?limpiarCadenas($_POST['correo']):"";
+$apellidop = isset($_POST['apellidop'])?limpiarCadenas($_POST['apellidop']):"";
+$apellidom = isset($_POST['apellidom'])?limpiarCadenas($_POST['apellidom']):"";
 $direccion = isset($_POST['direccion'])?limpiarCadenas($_POST['direccion']):"";
+$municipio = isset($_POST['municipio'])?limpiarCadenas($_POST['municipio']):"";
+$estado = isset($_POST['estado'])?limpiarCadenas($_POST['estado']):"";
+$cp = isset($_POST['cp'])?limpiarCadenas($_POST['cp']):"";
 $telefono = isset($_POST['telefono'])?limpiarCadenas($_POST['telefono']):"";
+$email = isset($_POST['email'])?limpiarCadenas($_POST['email']):"";
 $contrasenia = isset($_POST['contrasenia'])?limpiarCadenas($_POST['contrasenia']):"";
 
 switch ($_GET['op']) {
     case 'actualizar':
-        if(!empty($nombre) && !empty($apellido_p) && !empty($apellido_m)&& !empty($correo)&& !empty($direccion)&& !empty($telefono)&& !empty($contrasenia)){
+        if(!empty($nombre) && !empty($apellidop) && !empty($apellidom)&& !empty($direccion)&& !empty($municipio)&& !empty($estado)&& !empty($cp)&& !empty($telefono)&& !empty($email)&& !empty($contrasenia)){
             #nuevo usuario
             session_start();
             $id = $_SESSION['usuario']["Id_usuario"];
-            $rps = $cliente ->actualizar_info($id,$nombre,$apellido_p,$apellido_m,$correo,$direccion,$telefono,$contrasenia);
+            $rps = $cliente ->actualizar_info($id,$nombre,$apellidop,$apellidom,$direccion,$municipio,$estado,$cp,$telefono,$email,$contrasenia);
             $mensaje = ($rps != 0)?"Datos actualizados": "ERROR, Datos no actualizados";
             echo $mensaje;
         }else{

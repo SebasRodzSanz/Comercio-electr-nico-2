@@ -18,12 +18,14 @@ class Cliente{
         WHERE us.Correo = '{$correo}' AND us.Contrasenia ='{$contrasenia}';";
         return ejecutarConsultaSimpleFila($sql);
     }
-    // public function actualizar_info($id_usuario,$nombre,$apellido_p,$apellido_m,$correo,$direccion,$telefono,$contrasenia){
-    //     $sql = "UPDATE usuario SET Nombre='{$nombre}',Apellido_paterno='{$apellido_p}',Apellido_materno='{$apellido_m}',
-    //     Correo='{$correo}',Direccion='{$direccion}',Telefono='{$telefono}',Contrasenia='{$contrasenia}'
-    //     WHERE Id_usuario = '{$id_usuario}';";
-    //     return ejecutarConsulta($sql);
-    // }
+    public function actualizar_info($id,$nombre,$apellidop,$apellidom,$direccion,$municipio,$estado,$cp,$telefono,$email,$contrasenia){
+        $cp = intval($cp);
+        $contrasenia = ($contrasenia == 'contrasenia')?"":",Contrasenia='{$contrasenia}'";
+        $sql = "UPDATE usuario SET Nombre='{$nombre}',Apellido_paterno='{$apellidop}',Apellido_materno='{$apellidom}',
+        Direccion='{$direccion}',Estado='{$estado}',Municipio='{$municipio}',Codigo_postal={$cp},Telefono='{$telefono}',Email='{$email}'
+        {$contrasenia} WHERE IdUsuario ={$id};";
+        return ejecutarConsulta($sql);
+    }
     // public function visualizarCompras($id_usuario){
     //     $sql = "SELECT uspr.Codigo_compra, pro.Nombre, uspr.Cantidad_productos, ve.Monto, ve.Metodo_pago, ve.Fecha FROM usuario_producto uspr 
     //     INNER JOIN producto pro ON uspr.Id_producto = pro.Id_producto
