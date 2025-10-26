@@ -265,6 +265,13 @@
 //   const loginBtn = document.getElementById("loginBtn");
 //   loginBtn.addEventListener("click", () => loginModal.style.display = 'flex');
 
+  //DROPDOWN LIST MENU
+  const btnDrop = document.getElementById('btn-drop');
+  
+  btnDrop.addEventListener('click',(e)=>{
+    e.preventDefault();
+    document.getElementById("mydropdown").classList.toggle("show-list");
+  })
 
 //JQUERY FUNCIONES
 $(document).ready(()=>{
@@ -294,12 +301,6 @@ $(document).ready(()=>{
       const newPrice = Math.round(oldPrice * (1 - discountPerc / 100));
       return { ...p, oldPrice, price: newPrice, discountPerc };
     });
-
-    // --- Manejo del DOM ---
-    const productGrid = document.getElementById('productGrid');
-    const offersGrid = document.getElementById('offersGrid');
-    const paginationEl = document.getElementById('pagination');
-    const ITEMS_PER_PAGE = 12;
 
     currentPage = 1;
     currentFilter = '';
@@ -406,7 +407,7 @@ $(document).ready(()=>{
     });
   });
 //Solicitar datos del usuario
-  $("#formSolicitarDatos").submit((e)=>{
+  $("#infop").click((e)=>{
     e.preventDefault();
     $.ajax({
       url:"ajax/cliente.php?op=listarInfo",
@@ -425,16 +426,19 @@ $(document).ready(()=>{
         $("#email").val(infoUser[0].Email);
         $("#contrasenia").val('contrasenia');
 
+        //Ocultar la lista
+        document.getElementById("mydropdown").classList.toggle("show-list");
         //mostrar formu
-        let dsecion = $("#infop").data('seccion');
-        mostrarSeccion(dsecion);
+        let dseccion = $("#infop").data('seccion');
+        mostrarSeccion(dseccion);
       }
     });
   });
 
 //Cerrar sesion
-  $("#FormLogOut").submit((e)=>{
+  $("#cls_sesion").click((e)=>{
     e.preventDefault();
+    document.getElementById("mydropdown").classList.toggle("show-list");
     if(confirm("¿Deseas cerrar sesión?")){
         $.ajax({
             url: "ajax/cliente.php?op=sesion",

@@ -294,11 +294,6 @@ $(document).ready(()=>{
     });
 
     // --- Manejo del DOM ---
-    const productGrid = document.getElementById('productGrid');
-    const offersGrid = document.getElementById('offersGrid');
-    const paginationEl = document.getElementById('pagination');
-    const ITEMS_PER_PAGE = 12;
-
     currentPage = 1;
     currentFilter = '';
 

@@ -27,12 +27,13 @@
       <button id="searchBtn">Buscar</button>
     </div>
     <div class="user-actions">
-            <form id="formSolicitarDatos">
-                <button type="submit"><i class="fas fa-user" id="infop" data-seccion="informacion_personal"></i>Información Personal</button>
-            </form>
-            <form id="FormLogOut">
-                <button type="submit"><i class="fas fa-user"></i> Cerrar Sesión</button>
-            </form>
+          <div class="dropdown">
+            <button id="btn-drop" class="mg-right"><i class="fas fa-user"></i> </button>
+            <div  id="mydropdown" class="dropdown-content">
+              <a class="option-list" id="infop"  data-seccion="informacion_personal" >Perfil</a>
+              <a class="option-list" id="cls_sesion" >Cerrar Sesión</a>
+            </div>
+          </div>
       <button class="cart-btn" id="cartBtn"><i class="fas fa-shopping-cart"></i><span id="cartCount" class="cart-count">0</span></button>
     </div>
   </div>

@@ -191,6 +191,37 @@ body {
         background-color: #8c3a38;
     }
 
+    /* Dropdown list */
+    .dropdown{
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content{
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 120px;
+      box-sizing: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .option-list{
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      cursor:pointer;
+    }
+    .option-list:hover{
+      background-color: #ddd;
+      border-radius: 3px;
+    }
+    .show-list{
+      display: block;
+    }
+    .mg-right{
+      margin-right: 15px;
+    }
+
     /* PRODUCTOS / OFERTAS */
     .productos-header { font-family: 'Playfair Display', serif; color: #a94442; font-size: 2.2rem; text-align: center; margin-bottom: 20px; }
     .contenedor { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
