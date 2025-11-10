@@ -42,6 +42,48 @@ create table if not exists Producto(
     Imagen_url varchar (90) not null,
     primary key (IdProducto)
 );
+-- tabla pago
+create table if not exists Pago (
+    FolioPago int not null AUTO_INCREMENT,
+    MetodoPago varchar(50) not null,
+    EstadoPago varchar(50) not null,
+    TotalPago float not null,
+    primary key (FolioPago)
+);
+
+-- tabla venta
+create table if not exists Venta(
+    FolioVenta int not null AUTO_INCREMENT,
+    IdProducto int not null,
+    IdUsuario int not null,
+    FolioPago int not null,
+    Cantidad FLOAT not null,
+    FechaVenta DATE not null,
+    primary key (FolioVenta),
+    constraint fk_idProducto_v foreign key (IdProducto) references Producto(IdProducto),
+    constraint fk_idUsuario_v foreign key (IdUsuario) references Usuario(IdUsuario),
+    constraint fk_folio_v foreign key (FolioPago) references Pago(FolioPago)
+);
+
+-- tabla de envio
+create table if not exists Envio(
+    IdEnvio int not null AUTO_INCREMENT,
+    FolioVenta int not null,
+    EstadoEnvio varchar(70) not null default 'En proceso',
+    FechaEntrega DATE not null,
+    Nota text,
+    primary key (IdEnvio),
+    constraint fk_folioVenta_env foreign key (FolioVente) references Venta(FolioVenta)
+);
+
+-- tabla almacen
+create table if not exists Almacen(
+    IdProducto int not null,
+    Cantidad int not null,
+    Estado varchar(50) null,
+    constraint fk_idProducto_alm foreign key (IdProducto) references Producto(IdProducto)
+);
+
 
 ALTER TABLE Producto ADD Rating int;
 -- las medidas son: 75cm x 75cm x 1cm, 90cm x 90cm x 2cm y 100cm x 100cm x 3cm.
@@ -223,3 +265,14 @@ FROM usuario us
 INNER JOIN usuario_rol usr ON us.IdUsuario = usr.IdUsuario
 INNER JOIN rol rll ON usr.IdRol = rll.IdRol;
 
+-- Sentencias de venta
+insert into pago(MetodoPago,EstadoPago,TotalPago) values ('Paypal', 'Completado',3300);
+insert into Venta (IdProducto,IdUsuario,FolioPago,Cantidad,FechaVenta) values (2,1,1,'2025-11-09');
+insert into Envio (FolioVenta,FechaEntrega,Nota) values (1,'2025-11-22','Hola, deja el paquete en la puerta de la entrada');
+SELECT ve.FolioVenta, ve.FechaVenta, pro.Nombre, pro.Precio, ve.Cantidad, pa.MetodoPago,pa.EstadoPago, pa.TotalPago, en.FechaEntrega, en.Nota  
+FROM Usuario us
+INNER JOIN Venta ve ON us.IdUsuario = venta.IdUsuario
+INNER JOIN Pago pa ON ve.FolioPago = pa.FolioPago
+INNER JOIN Envio en ve.FolioVenta = en.FolioVenta
+INNER JOIN Producto pro ON ve.IdProducto = pro.IdProducto
+WHERE us.IdUsuario = 1;

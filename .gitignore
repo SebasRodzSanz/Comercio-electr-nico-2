@@ -2,5 +2,7 @@
 public/img
 #global de config
 config/global.php
+#global de py config
+config/global_py.php
 #index.html
 index_tlacuache_art.html

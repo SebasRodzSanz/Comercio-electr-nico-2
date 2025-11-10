@@ -485,3 +485,434 @@ body {
             height: auto;
         }
     }
+/* ========================================= */
+/* === ESTILOS VISUALES PARA SECCIÓN ACERCA DE (Tlacuache Art) === */
+/* ========================================= */
+
+/* Variables de Color (Asegura consistencia si tu proyecto usa otros colores) */
+:root {
+    --tlacuache-brown: #3a1d0b;   /* Color principal oscuro (Texto, Títulos) */
+    --tlacuache-orange: #c55b11; /* Color de acento (Botones, Iconos) */
+    --tlacuache-light: #f7f7f7;   /* Fondo de la sección */
+    --tlacuache-cream: #fffaf0;   /* Fondo de tarjetas destacadas */
+}
+
+/* 1. Fondo General y Títulos */
+#acerca {
+    background-color: var(--tlacuache-light) !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+#acerca header .display-5 {
+    color: var(--tlacuache-brown) !important;
+    text-transform: uppercase;
+    font-size: 2.5rem; /* Hace el título más grande */
+    border-bottom: 3px solid var(--tlacuache-orange);
+    padding-bottom: 10px;
+    margin-bottom: 20px !important;
+}
+
+/* 2. Tarjeta de Fundación y Anécdota */
+#acerca .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra más suave */
+}
+
+#acerca .card-body h3 {
+    color: var(--tlacuache-orange) !important; /* Títulos de la tarjeta en naranja */
+    font-weight: 700;
+}
+
+#acerca .card-body .lead {
+    font-size: 1.1rem; /* Texto principal más legible */
+    font-weight: 500;
+}
+
+/* 3. Tablas de Creadores y Experiencias */
+#acerca .table {
+    border-radius: 8px;
+    overflow: hidden; /* Asegura que las esquinas redondeadas funcionen */
+    margin-bottom: 2rem;
+    border: 1px solid #ddd;
+}
+
+#acerca .table thead {
+    background-color: var(--tlacuache-orange) !important;
+    color: white;
+}
+
+#acerca .table th {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* Fotos de Creadores y Productos */
+.creator-photo, .product-review-photo {
+    width: 50px; /* Tamaño reducido para no ocupar tanto espacio */
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; /* Creadores circulares */
+    border: 2px solid var(--tlacuache-brown);
+    display: block;
+    margin: 0 auto;
+}
+.product-review-photo {
+    border-radius: 4px; /* Productos cuadrados */
+}
+
+/* 4. Sección de Ventajas (Listas) */
+#acerca .advantage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+#acerca .advantage-item {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid var(--tlacuache-orange);
+    transition: transform 0.2s;
+}
+
+#acerca .advantage-item:hover {
+    transform: translateY(-3px);
+}
+
+#acerca .advantage-item i {
+    color: var(--tlacuache-orange);
+    margin-right: 10px;
+}
+
+/* ========================================= */
+/* === ESTILOS VISUALES PARA SECCIÓN ACERCA DE (Tlacuache Art) === */
+/* ========================================= */
+
+/* Variables de Color (Asegura consistencia si tu proyecto usa otros colores) */
+:root {
+    --tlacuache-brown: #3a1d0b;   /* Color principal oscuro (Texto, Títulos) */
+    --tlacuache-orange: #c55b11; /* Color de acento (Botones, Iconos) */
+    --tlacuache-light: #f7f7f7;   /* Fondo de la sección */
+    --tlacuache-cream: #fffaf0;   /* Fondo de tarjetas destacadas */
+}
+
+/* 1. Fondo General y Títulos */
+#acerca {
+    background-color: var(--tlacuache-light) !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+#acerca header .display-5 {
+    color: var(--tlacuache-brown) !important;
+    text-transform: uppercase;
+    font-size: 2.5rem; /* Hace el título más grande */
+    border-bottom: 3px solid var(--tlacuache-orange);
+    padding-bottom: 10px;
+    margin-bottom: 20px !important;
+}
+
+/* 2. Tarjeta de Fundación y Anécdota */
+#acerca .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra más suave */
+}
+
+#acerca .card-body h3 {
+    color: var(--tlacuache-orange) !important; /* Títulos de la tarjeta en naranja */
+    font-weight: 700;
+}
+
+#acerca .card-body .lead {
+    font-size: 1.1rem; /* Texto principal más legible */
+    font-weight: 500;
+}
+
+/* 3. Tablas de Creadores y Experiencias */
+#acerca .table {
+    border-radius: 8px;
+    overflow: hidden; /* Asegura que las esquinas redondeadas funcionen */
+    margin-bottom: 2rem;
+    border: 1px solid #ddd;
+}
+
+#acerca .table thead {
+    background-color: var(--tlacuache-orange) !important;
+    color: white;
+}
+
+#acerca .table th {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* 4. Estilos para las fotos en las Tablas */
+
+/* Fotos de Creadores (Circulares) */
+.creator-photo {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; /* La hace circular */
+    border: 2px solid var(--tlacuache-brown);
+    display: block;
+    margin: 0 auto;
+}
+
+/* Fotos de Productos en las Experiencias (Cuadradas) */
+.product-review-photo {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Estilo de Encabezados de Bloque (Subtítulos de Bloques) */
+#acerca h3.h5 {
+    color: var(--tlacuache-brown) !important;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 15px !important;
+}
+
+/* Estilo para los bloques de ventajas (con borde naranja) */
+#acerca .advantage-item {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid var(--tlacuache-orange);
+    transition: transform 0.2s;
+}
+
+#acerca .advantage-item:hover {
+    transform: translateY(-3px);
+}
+
+#acerca .advantage-item i {
+    color: var(--tlacuache-orange);
+    margin-right: 10px;
+}
+
+/* ========================================= */
+/* === ESTILOS VISUALES PARA SECCIÓN ACERCA DE (Tlacuache Art) === */
+/* ========================================= */
+
+/* Variables de Color (Asegura consistencia si tu proyecto usa otros colores) */
+:root {
+    /* Basado en tus colores existentes (#a94442 para títulos y #e2761b para botones) */
+    --tlacuache-brown: #3a1d0b;   /* Color principal oscuro (Texto, Títulos) */
+    --tlacuache-orange: #c55b11; /* Color de acento (Ajustado para mejor contraste con tus naranjas) */
+    --tlacuache-light: #f7f7f7;   /* Fondo de la sección */
+    --tlacuache-cream: #fffaf0;   /* Fondo de tarjetas destacadas */
+}
+
+/* 1. Fondo General y Títulos */
+#acerca {
+    background-color: var(--tlacuache-light) !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+#acerca header .display-5 {
+    color: var(--tlacuache-brown) !important;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    border-bottom: 3px solid var(--tlacuache-orange);
+    padding-bottom: 10px;
+    margin-bottom: 20px !important;
+}
+
+/* 2. Estilos de Tarjetas (Fundación) */
+#acerca .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#acerca .card-body h3 {
+    color: var(--tlacuache-orange) !important;
+    font-weight: 700;
+}
+
+/* 3. Estilos de Tablas (Creadores y Experiencias) */
+#acerca .table {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid #ddd;
+}
+
+#acerca .table thead {
+    background-color: var(--tlacuache-orange) !important;
+    color: white;
+}
+
+#acerca .table th {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* 4. Fotos de Creadores y Experiencias (TAMAÑOS REDUCIDOS) */
+
+/* Fotos de Creadores (Tabla Conoce a los Creadores) */
+.creator-photo {
+   width: 80px !important; /* Mantenemos este tamaño pequeño y forzado */
+    height: 80px !important;
+    object-fit: cover;
+    border-radius: 80%;
+    border: 2px solid var(--tlacuache-brown);
+    display: block;
+    margin: 0 auto;
+}
+
+/* Fotos de Clientes en la tabla de experiencias (FORZANDO TAMAÑO) */
+.client-review-photo {
+    width: 80px !important; /* Mantenemos este tamaño pequeño y forzado */
+    height: 80px !important;
+    object-fit: cover;
+    border-radius: 80%; 
+    border: 2px solid #555; 
+    display: block;
+    margin: 0 auto;
+}
+/* Fotos de Productos en las Experiencias (Cuadradas) */
+.product-review-photo {
+    width: 80px !important; /* Mantenemos este tamaño pequeño y forzado */
+    height: 80px !important;
+    object-fit: cover;
+    border-radius: 4px; 
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 auto;
+}
+
+/* 5. Estilos de Bloques y Ventajas */
+#acerca h3.h5 {
+    color: var(--tlacuache-brown) !important;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 15px !important;
+}
+
+#acerca .advantage-item {
+    border-left: 5px solid var(--tlacuache-orange);
+    transition: transform 0.2s;
+}
+
+#acerca .advantage-item:hover {
+    transform: translateY(-3px);
+}
+
+#acerca .advantage-item i {
+    color: var(--tlacuache-orange);
+    margin-right: 10px;
+}
+
+/* 6. Estilos Específicos para la Tabla de Experiencias */
+
+/* Asegura que las estrellas en la tabla de experiencias se vean bien */
+.experience-table .text-warning {
+    color: #ffc107 !important; 
+    white-space: nowrap;
+    font-size: 1.1em;
+}
+
+/* Alineación de celdas en la tabla de experiencias */
+.experience-table td {
+    vertical-align: middle;
+}
+.experience-table td.client-photo-cell,
+.experience-table td:first-child, /* Si es la columna de rating */
+.experience-table td.product-cell {
+    text-align: center;
+}
+
+/* Mejora la legibilidad general */
+#acerca p, #acerca li, #acerca td {
+    color: #555; 
+    line-height: 1.6;
+}
+
+#acerca strong {
+    color: var(--tlacuache-brown);
+}
+
+/* pasarela de pago */
+
+.checkout-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 700px;
+  margin: auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-section, .order-summary {
+  flex: 1;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.form-section {
+  border-right: 1px solid #ddd;
+}
+
+.checkout-container h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.checkout-container form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.checkout-container form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.order-summary .product-list p,
+.order-summary .totals p {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.order-summary .total {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.checkout-container button {
+  width: 100%;
+  padding: 15px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.checkout-container button:hover {
+  background-color: #005fa3;
+}

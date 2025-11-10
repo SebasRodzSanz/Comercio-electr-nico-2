@@ -1,4 +1,4 @@
-  //VARIABLES
+//VARIABLES
   let allProducts,offers;
 
   // --- Manejo del DOM ---
@@ -9,6 +9,22 @@
 
   let currentPage = 1;
   let currentFilter = '';
+  
+  const IVA_RATE = 0.16; // 16% IVA para cálculo de totales (3.4)
+  let savedAddress = 'No has iniciado sesión. Ingresa una dirección manual.'; // Dirección por defecto para usuarios no logueados (3.5)
+  let shippingNote = ''; // Nota especial (3.5)
+
+  // --- Cart DOM Elements for totals and shipping (3.4 y 3.5) ---
+  const cartSubtotalEl = document.getElementById('cartSubtotal');
+  const cartIVAEl = document.getElementById('cartIVA');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const currentAddressEl = document.getElementById('currentAddress');
+  const newAddressFields = document.getElementById('newAddressFields');
+  const newDireccionInput = document.getElementById('newDireccion');
+  const specialNoteTextarea = document.getElementById('specialNote');
+  const defaultAddressRadio = document.getElementById('defaultAddress');
+  const newAddressOptionRadio = document.getElementById('newAddressOption');
+
 
   function formatMoney(n) {
     return '$' + n.toLocaleString() + ' MXN';
@@ -76,11 +92,43 @@
   floatingCart.addEventListener("click", () => cartOffcanvas.classList.add("show"));
   closeCart.addEventListener("click", () => cartOffcanvas.classList.remove("show"));
 
+  // Event listeners for shipping address selection (3.5)
+  defaultAddressRadio.addEventListener('change', () => {
+      if (defaultAddressRadio.checked) newAddressFields.style.display = 'none';
+  });
+  newAddressOptionRadio.addEventListener('change', () => {
+      if (newAddressOptionRadio.checked) newAddressFields.style.display = 'block';
+  });
+  specialNoteTextarea.addEventListener('input', (e) => {
+      shippingNote = e.target.value;
+  });
+
+  // Función auxiliar para actualizar totales y UI de envío
+  function updateCartTotalsAndShippingUI(subtotal, count) {
+      // Cálculo de totales (3.4)
+      const iva = subtotal * IVA_RATE;
+      const total = subtotal + iva;
+
+      // Actualizar display de totales (3.4)
+      cartSubtotalEl.textContent = formatMoney(subtotal);
+      cartIVAEl.textContent = formatMoney(iva);
+      cartTotalEl.textContent = formatMoney(total);
+      
+      cartCount.textContent = count;
+      floatingCartCount.textContent = count;
+      cartCount.style.display = count > 0 ? "inline-block" : "none";
+      floatingCartCount.style.display = count > 0 ? "inline-block" : "none";
+
+      // Actualizar información de envío (3.5)
+      currentAddressEl.textContent = savedAddress;
+      specialNoteTextarea.value = shippingNote;
+  }
+
   function renderCart() {
     cartList.innerHTML = "";
-    let total = 0, count = 0;
+    let subtotal = 0, count = 0;
     cart.forEach((item, i) => {
-      total += item.price * item.qty;
+      subtotal += item.price * item.qty;
       count += item.qty;
       cartList.innerHTML += `
         <div class="cart-item">
@@ -98,11 +146,8 @@
         </div>
       `;
     });
-    document.querySelector(".cart-total").textContent = "Total: " + formatMoney(total);
-    cartCount.textContent = count;
-    floatingCartCount.textContent = count;
-    cartCount.style.display = count > 0 ? "inline-block" : "none";
-    floatingCartCount.style.display = count > 0 ? "inline-block" : "none";
+    
+    updateCartTotalsAndShippingUI(subtotal, count); 
   }
 
   function removeItem(i) {
@@ -417,8 +462,135 @@ $(document).ready(()=>{
         }
       });
   });
+// --- Lógica de Finalizar Compra (Función Nueva) ---
+  // function handleCheckout() {
+  //   if (cart.length === 0) {
+  //     alert("El carrito está vacío. Agrega productos antes de finalizar la compra.");
+  //     return;
+  //   }
+
+  //   const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+  //   const iva = subtotal * IVA_RATE;
+  //   const total = subtotal + iva;
+  //   const shippingAddress = defaultAddressRadio.checked ? savedAddress : newDireccionInput.value;
+  //   const note = specialNoteTextarea.value || 'Ninguna';
+
+  //   const confirmationMsg = `
+  //   ✅ ¡COMPRA EXITOSA! ✅
+
+  //   Detalles del Pedido:
+  //   --------------------------
+  //   Subtotal: ${formatMoney(subtotal)}
+  //   IVA (16%): ${formatMoney(iva)}
+  //   Total Final: ${formatMoney(total)}
+
+  //   Dirección de Envío:
+  //   --------------------------
+  //   ${shippingAddress}
+
+  //   Nota Especial (Horarios):
+  //   --------------------------
+  //   ${note}
+
+  //   Gracias por tu compra en Tlacuache Art. Tu pedido será procesado pronto.
+  //   `;
+
+  //   alert(confirmationMsg);
+
+  //   // Vaciar el carrito
+  //   cart = [];
+  //   renderCart();
+  //   cartOffcanvas.classList.remove("show");
+  // }
+
+  // --- Asignar evento al botón "Finalizar compra" ---
+  // document.querySelector(".checkout-btn").addEventListener("click", handleCheckout);
+  //BOTON DEL CHEKOUT O PASARELA DE PAGO
+  $('#checkout-btn').click((e)=>{
+    e.preventDefault();
+    
+    if(cart.length != 0 ){
+    // console.log(cart);
+
+      //Datos de la pasarela de pago
+      let html_pass = "";
+      let subtotal_pass= 0,total_pass= 0, iva_pass=0;
+      cart.forEach((item)=>{
+        html_pass+=`<p>${item.title} × ${item.qty} <span>$ ${item.price} MXN</span></p>`;
+        subtotal_pass += item.price * item.qty;
+      });
+      iva_pass = subtotal_pass * 0.16;
+      total_pass = iva_pass + subtotal_pass;
+
+      //pintar pasarela de pago
+      $("#subtotal_pass").html(formatMoney(subtotal_pass));
+      $("#iva_pass").html(formatMoney(iva_pass));
+      $("#total_pass").html(formatMoney(total_pass));
+      $("#product_list_pass").html(html_pass);
+
+      //paypal btn 
+      let descripcion_paypal ="Compra en Tlacuache Art";
+      let moneda_paypal = "MXN"
+      renderBotonPayPal('#btn_paypal',total_pass,descripcion_paypal,moneda_paypal);
+
+
+      let dseccion = $("#checkout-btn").data('seccion');
+      mostrarSeccion(dseccion);
+    }
+
+    function renderBotonPayPal(containerId,precio,descripcion,moneda) {
+            paypal.Buttons({
+                createOrder: function(data_pay,actions_pay){
+                    return fetch('ajax/usuario.php?op=crearOrden',{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({
+                            precio,
+                            descripcion,
+                            moneda
+                        })
+                    }).then((res)=>{
+                        if (!res.ok) {
+                            throw new Error('Error al crear la orden');
+                        }
+                        return res.json();
+                    }).then((order)=>order.id).catch((err)=>{
+                        notyf.error('Error al crear la orden: '+err.message);
+                        throw err;
+                    })
+                },
+                onApprove: function (data_pay,actions_pay){
+                    return fetch('ajax/usuario.php?op=capturaOrden',{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({
+                            orderID: data_pay.orderID
+                        })
+                    }).then((res)=>{
+                        if(!res.ok){
+                            throw new Error('Error al capturar la orden');
+                        }
+                        return res.json();
+                    }).then((details)=>{
+                        notyf.success('Pago completado por '+details.payer.name.given_name);
+                        //llamar a funcion de registro de pago y registro de datos en la base de datos
+
+                    }).catch((err)=>{
+                        notyf.error('Error al capturar el pago: '+err.message);
+                    });
+                },
+                onError: function(err){
+                    notyf.error('Error en el proceso de pago: '+err.message);
+                }
+            }).render(containerId);
+        };
+
+  });
+
 
   init();
 }); //fin del document ready
-
-

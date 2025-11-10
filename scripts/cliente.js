@@ -1,4 +1,4 @@
-  //Variables
+//Variables
   let allProducts,offers;
   // --- Manejo del DOM ---
   const productGrid = document.getElementById('productGrid');
@@ -8,6 +8,32 @@
 
   let currentPage = 1;
   let currentFilter = '';
+
+  const IVA_RATE = 0.16; // 16% IVA para cálculo de totales (3.4)
+  let savedAddress = 'Cargando dirección registrada...'; // Dirección por defecto (se actualizará con AJAX) (3.5)
+  let shippingNote = ''; // Nota especial (3.5)
+
+  // --- Cart DOM Elements for totals and shipping (3.4 y 3.5) ---
+  const cartSubtotalEl = document.getElementById('cartSubtotal');
+  const cartIVAEl = document.getElementById('cartIVA');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const currentAddressEl = document.getElementById('currentAddress');
+  const newAddressFields = document.getElementById('newAddressFields');
+  const newDireccionInput = document.getElementById('newDireccion');
+  const specialNoteTextarea = document.getElementById('specialNote');
+  const defaultAddressRadio = document.getElementById('defaultAddress');
+  const newAddressOptionRadio = document.getElementById('newAddressOption');
+
+  // Event listeners for shipping address selection (3.5)
+  defaultAddressRadio.addEventListener('change', () => {
+      if (defaultAddressRadio.checked) newAddressFields.style.display = 'none';
+  });
+  newAddressOptionRadio.addEventListener('change', () => {
+      if (newAddressOptionRadio.checked) newAddressFields.style.display = 'block';
+  });
+  specialNoteTextarea.addEventListener('input', (e) => {
+      shippingNote = e.target.value;
+  });
 
   function formatMoney(n) {
     return '$' + n.toLocaleString() + ' MXN';
@@ -62,6 +88,27 @@
     paginationEl.innerHTML = html;
   }
 
+  // Función auxiliar para actualizar totales y UI de envío
+  function updateCartTotalsAndShippingUI(subtotal, count) {
+      // Cálculo de totales (3.4)
+      const iva = subtotal * IVA_RATE;
+      const total = subtotal + iva;
+
+      // Actualizar display de totales (3.4)
+      cartSubtotalEl.textContent = formatMoney(subtotal);
+      cartIVAEl.textContent = formatMoney(iva);
+      cartTotalEl.textContent = formatMoney(total);
+      
+      cartCount.textContent = count;
+      floatingCartCount.textContent = count;
+      cartCount.style.display = count > 0 ? "inline-block" : "none";
+      floatingCartCount.style.display = count > 0 ? "inline-block" : "none";
+
+      // Actualizar información de envío (3.5)
+      currentAddressEl.textContent = savedAddress;
+      specialNoteTextarea.value = shippingNote;
+  }
+
   // --- Delegación de eventos: añadir al carrito y ver más ---
   let cart = [];
   const cartBtn = document.getElementById("cartBtn");
@@ -78,9 +125,9 @@
 
   function renderCart() {
     cartList.innerHTML = "";
-    let total = 0, count = 0;
+    let subtotal = 0, count = 0;
     cart.forEach((item, i) => {
-      total += item.price * item.qty;
+      subtotal += item.price * item.qty;
       count += item.qty;
       cartList.innerHTML += `
         <div class="cart-item">
@@ -98,11 +145,8 @@
         </div>
       `;
     });
-    document.querySelector(".cart-total").textContent = "Total: " + formatMoney(total);
-    cartCount.textContent = count;
-    floatingCartCount.textContent = count;
-    cartCount.style.display = count > 0 ? "inline-block" : "none";
-    floatingCartCount.style.display = count > 0 ? "inline-block" : "none";
+    
+    updateCartTotalsAndShippingUI(subtotal, count);
   }
 
   function removeItem(i) {
@@ -425,7 +469,11 @@ $(document).ready(()=>{
         $("#telefono").val(infoUser[0].Telefono);
         $("#email").val(infoUser[0].Email);
         $("#contrasenia").val('contrasenia');
-
+        
+        // Actualizar savedAddress globalmente para el carrito (3.5)
+        savedAddress = `${infoUser[0].Direccion}, ${infoUser[0].Municipio}, ${infoUser[0].Estado}, C.P. ${infoUser[0].Codigo_postal}`;
+        currentAddressEl.textContent = savedAddress;
+        
         //Ocultar la lista
         document.getElementById("mydropdown").classList.toggle("show-list");
         //mostrar formu
@@ -450,10 +498,54 @@ $(document).ready(()=>{
         });
     }
   });
+// --- Lógica de Finalizar Compra (Función Nueva) ---
+  function handleCheckout() {
+    if (cart.length === 0) {
+      alert("El carrito está vacío. Agrega productos antes de finalizar la compra.");
+      return;
+    }
+    
+    // Si la opción de nueva dirección está marcada, pero el campo está vacío, alertar al usuario
+    if (newAddressOptionRadio.checked && !newDireccionInput.value.trim()) {
+        alert("Por favor, ingresa una nueva dirección válida o selecciona tu dirección registrada.");
+        return;
+    }
 
+    const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+    const iva = subtotal * IVA_RATE;
+    const total = subtotal + iva;
+    const shippingAddress = defaultAddressRadio.checked ? savedAddress : newDireccionInput.value;
+    const note = specialNoteTextarea.value || 'Ninguna';
+
+    const confirmationMsg = `
+    ✅ ¡COMPRA EXITOSA! ✅
+
+    Detalles del Pedido:
+    --------------------------
+    Subtotal: ${formatMoney(subtotal)}
+    IVA (16%): ${formatMoney(iva)}
+    Total Final: ${formatMoney(total)}
+
+    Dirección de Envío:
+    --------------------------
+    ${shippingAddress}
+
+    Nota Especial (Horarios):
+    --------------------------
+    ${note}
+
+    Gracias por tu compra en Tlacuache Art. Tu pedido será procesado pronto.
+    `;
+
+    alert(confirmationMsg);
+
+    // Vaciar el carrito
+    cart = [];
+    renderCart();
+    cartOffcanvas.classList.remove("show");
+  }
+
+  // --- Asignar evento al botón "Finalizar compra" ---
+  document.querySelector(".checkout-btn").addEventListener("click", handleCheckout);
   init();
 });//fin del document ready
-
-
-
-
