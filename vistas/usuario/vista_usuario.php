@@ -323,66 +323,6 @@ fácilmente en la mente de los clientes.
     </div>
 </section>
 
-<section id="pass_pago" class="seccion">
-  <div class="checkout-container">
-    <!-- Columna izquierda: Formulario -->
-    <div class="form-section">
-      <h2 >Detalles del cliente</h2>
-      <form autocomplete="off">
-        <label for="pass_nombre" >Nombre completo:</label>
-        <input type="text" id="pass_nombre" placeholder="Escribe tu nombre"  name="nombre" required>
-
-        <label for="pass_apellido" >Apellido Paterno:</label>
-        <input type="text" id="pass_apellido" placeholder="Escribe tu apellido paterno"  name="nombre" required>
-
-        <label for="pass_calle" >Calle:</label>
-        <input type="text" id="pass_calle" placeholder="Escribe tu calle"  name="calle" required>
-
-        <label for="pass_no_casa" >Número de casa:</label>
-        <input type="text" id="pass_no_casa" placeholder="Escribe el numero de casa. ejem. #91"  name="numero" required>
-
-        <label for="pass_colonia" >Colonia:</label>
-        <input type="text" id="pass_colonia" placeholder="Escribe tu colonia"  name="colonia" required>
-
-        <label for="pass_municipio" >Municipio:</label>
-        <input type="text" id="pass_municipio" placeholder="Escribe tu municipio"  name="municipio" required>
-
-        <label for="pass_estado" >Estado:</label>
-        <input type="text"  id="pass_estado" placeholder="Escribe tu estado" name="estado" required>
-
-        <label for="pass_cod_post" >Código Postal:</label>
-        <input type="text" id="pass_cod_post" placeholder="Escribe tu codigo postal"  name="cp" required>
-
-        <label for="pass_celular" >Celular:</label>
-        <input type="tel"  id="pass_celular" placeholder="Escribe tu celular" name="celular" required>
-
-        <label for="pass_email" >Correo electrónico:</label>
-        <input type="email" id="pass_email" id="pass_email" placeholder="Escribe tu email"  name="email" required>
-
-        <label>Notas adicionales:</label>
-        <textarea name="notas" id="pass_notas" rows="5" placeholder="Información especial para la entrega..."></textarea>
-      </form>
-    </div>
-    <!-- Columna derecha: Resumen del pedido -->
-    <div class="order-summary">
-      <h2>Tu Pedido</h2>
-      <div class="product-list" id="product_list_pass">
-      </div>
-      <div class="totals">
-        <p>Subtotal: <span id="subtotal_pass"></span></p>
-        <p>IVA: <span id="iva_pass"></span></p>
-        <p>Envío: <span id="envio_pass">Gratis</span></p>
-        <p class="total">Total: <span id="total_pass"></span></p>
-
-      </div>
-      <!-- <button id="registrar_pedido" type="submit">REALIZAR PEDIDO</button> -->
-      <br>
-      <div id="btn_paypal"></div>
-      
-    </div>
-  </div>
-</section>
-
 <div class="offcanvas" id="cartOffcanvas">
   <div class="offcanvas-header">
     <h3><i class="fas fa-shopping-cart"></i> Carrito</h3>
@@ -397,7 +337,7 @@ fácilmente en la mente de los clientes.
         <div class="cart-total">Total: <span id="cartTotal">$0.00</span></div>
     </div>
 
-    <div class="cart-shipping-info">
+    <!-- <div class="cart-shipping-info">
         <h4>Dirección de Envío</h4>
         <div class="form-elemento">
             <input type="radio" id="defaultAddress" name="shippingAddress" value="default" checked>
@@ -416,9 +356,9 @@ fácilmente en la mente de los clientes.
         <div class="form-elemento">
             <textarea id="specialNote" placeholder="Ej: Entregar de 9am a 5pm. Llamar al llegar para localizarme."></textarea>
         </div>
-    </div>
+    </div> -->
     
-    <button id="checkout-btn" data-seccion="pass_pago">Finalizar compra</button>
+    <button id="checkout-btn">Finalizar compra</button>
   </div>
 </div>
 
@@ -499,7 +439,6 @@ fácilmente en la mente de los clientes.
 </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="https://www.paypal.com/sdk/js?client-id=AQdwWeSjxuuQhxV6rOO_iLVi1DKLSAdwzkPjqEn7WKg0W8UJvISSwVVXAG8cpoIfC7S3h9hJKq9zzaFb&currency=MXN"></script>
   <script src="./scripts/usuario.js"></script>
 </body>
 </html>

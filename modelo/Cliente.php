@@ -12,6 +12,11 @@ class Cliente{
         Telefono,Email,contrasenia FROM usuario WHERE IdUsuario = {$id_usuario};";
         return ejecutarConsulta($sql);
     }
+    public function solicitarInformacionCompra($id_usuario){
+        $sql = "SELECT Nombre,Apellido_paterno,Apellido_materno,Direccion,Estado,Municipio,Codigo_postal,
+        Telefono,Email FROM usuario WHERE IdUsuario = {$id_usuario};";
+        return ejecutarConsulta($sql);
+    }
     public function consultarUsuario($correo, $contrasenia){
         $sql = "SELECT us.Id_usuario, us.Nombre, us.Apellido_paterno, usr.Id_rol FROM usuario us 
         INNER JOIN usuario_rol usr ON us.Id_usuario = usr.Id_usuario INNER JOIN roles ro ON usr.Id_rol = ro.Id_rol

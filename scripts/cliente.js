@@ -10,30 +10,30 @@
   let currentFilter = '';
 
   const IVA_RATE = 0.16; // 16% IVA para cálculo de totales (3.4)
-  let savedAddress = 'Cargando dirección registrada...'; // Dirección por defecto (se actualizará con AJAX) (3.5)
-  let shippingNote = ''; // Nota especial (3.5)
+  // let savedAddress = 'Cargando dirección registrada...'; // Dirección por defecto (se actualizará con AJAX) (3.5)
+  // let shippingNote = ''; // Nota especial (3.5)
 
   // --- Cart DOM Elements for totals and shipping (3.4 y 3.5) ---
   const cartSubtotalEl = document.getElementById('cartSubtotal');
   const cartIVAEl = document.getElementById('cartIVA');
   const cartTotalEl = document.getElementById('cartTotal');
-  const currentAddressEl = document.getElementById('currentAddress');
-  const newAddressFields = document.getElementById('newAddressFields');
-  const newDireccionInput = document.getElementById('newDireccion');
-  const specialNoteTextarea = document.getElementById('specialNote');
-  const defaultAddressRadio = document.getElementById('defaultAddress');
-  const newAddressOptionRadio = document.getElementById('newAddressOption');
+  // const currentAddressEl = document.getElementById('currentAddress');
+  // const newAddressFields = document.getElementById('newAddressFields');
+  // const newDireccionInput = document.getElementById('newDireccion');
+  // const specialNoteTextarea = document.getElementById('specialNote');
+  // const defaultAddressRadio = document.getElementById('defaultAddress');
+  // const newAddressOptionRadio = document.getElementById('newAddressOption');
 
   // Event listeners for shipping address selection (3.5)
-  defaultAddressRadio.addEventListener('change', () => {
-      if (defaultAddressRadio.checked) newAddressFields.style.display = 'none';
-  });
-  newAddressOptionRadio.addEventListener('change', () => {
-      if (newAddressOptionRadio.checked) newAddressFields.style.display = 'block';
-  });
-  specialNoteTextarea.addEventListener('input', (e) => {
-      shippingNote = e.target.value;
-  });
+  // defaultAddressRadio.addEventListener('change', () => {
+  //     if (defaultAddressRadio.checked) newAddressFields.style.display = 'none';
+  // });
+  // newAddressOptionRadio.addEventListener('change', () => {
+  //     if (newAddressOptionRadio.checked) newAddressFields.style.display = 'block';
+  // });
+  // specialNoteTextarea.addEventListener('input', (e) => {
+  //     shippingNote = e.target.value;
+  // });
 
   function formatMoney(n) {
     return '$' + n.toLocaleString() + ' MXN';
@@ -105,8 +105,8 @@
       floatingCartCount.style.display = count > 0 ? "inline-block" : "none";
 
       // Actualizar información de envío (3.5)
-      currentAddressEl.textContent = savedAddress;
-      specialNoteTextarea.value = shippingNote;
+      // currentAddressEl.textContent = savedAddress;
+      // specialNoteTextarea.value = shippingNote;
   }
 
   // --- Delegación de eventos: añadir al carrito y ver más ---
@@ -471,8 +471,8 @@ $(document).ready(()=>{
         $("#contrasenia").val('contrasenia');
         
         // Actualizar savedAddress globalmente para el carrito (3.5)
-        savedAddress = `${infoUser[0].Direccion}, ${infoUser[0].Municipio}, ${infoUser[0].Estado}, C.P. ${infoUser[0].Codigo_postal}`;
-        currentAddressEl.textContent = savedAddress;
+        // savedAddress = `${infoUser[0].Direccion}, ${infoUser[0].Municipio}, ${infoUser[0].Estado}, C.P. ${infoUser[0].Codigo_postal}`;
+        // currentAddressEl.textContent = savedAddress;
         
         //Ocultar la lista
         document.getElementById("mydropdown").classList.toggle("show-list");
@@ -498,54 +498,180 @@ $(document).ready(()=>{
         });
     }
   });
-// --- Lógica de Finalizar Compra (Función Nueva) ---
-  function handleCheckout() {
-    if (cart.length === 0) {
-      alert("El carrito está vacío. Agrega productos antes de finalizar la compra.");
-      return;
-    }
+
+  //BOTON DEL CHEKOUT O PASARELA DE PAGO
+  $('#checkout-btn').click((e)=>{
+    e.preventDefault();
     
-    // Si la opción de nueva dirección está marcada, pero el campo está vacío, alertar al usuario
-    if (newAddressOptionRadio.checked && !newDireccionInput.value.trim()) {
-        alert("Por favor, ingresa una nueva dirección válida o selecciona tu dirección registrada.");
-        return;
+    if(cart.length != 0 ){
+    // console.log(cart);
+      $.ajax({
+      url:"ajax/cliente.php?op=listarInfoPersonal",
+      type:"POST",
+      success:(response)=>{
+        let infoUser = JSON.parse(response);
+        // console.log(infoUser);
+        $("#pass_nombre").val(infoUser[0].Nombre);
+        $("#pass_apellido").val(infoUser[0].Apellido_paterno);
+        $("#pass_apellidom").val(infoUser[0].Apellido_materno);
+        $("#pass_direccion").val(infoUser[0].Direccion);
+        $("#pass_municipio").val(infoUser[0].Municipio);
+        $("#pass_estado").val(infoUser[0].Estado);
+        $("#pass_cod_post").val(infoUser[0].Codigo_postal);
+        $("#pass_celular").val(infoUser[0].Telefono);
+        $("#pass_email").val(infoUser[0].Email);
+
+        //Datos de la pasarela de pago
+        let html_pass = "";
+        let subtotal_pass= 0,total_pass= 0, iva_pass=0;
+        cart.forEach((item)=>{
+          html_pass+=`<p>${item.title} × ${item.qty} <span>$ ${item.price} MXN</span></p>`;
+          subtotal_pass += item.price * item.qty;
+        });
+        iva_pass = subtotal_pass * 0.16;
+        total_pass = iva_pass + subtotal_pass;
+
+        //pintar pasarela de pago
+        $("#subtotal_pass").html(formatMoney(subtotal_pass));
+        $("#iva_pass").html(formatMoney(iva_pass));
+        $("#total_pass").html(formatMoney(total_pass));
+        $("#product_list_pass").html(html_pass);
+
+        //paypal btn 
+        let descripcion_paypal ="Compra en Tlacuache Art";
+        let moneda_paypal = "MXN"
+        renderBotonPayPal('#btn_paypal',total_pass,descripcion_paypal,moneda_paypal);
+
+        // Bloquea el boton de registrar datos 
+        $('#registrar_pedido').prop('disabled',true);
+
+        let dseccion = $("#checkout-btn").data('seccion');
+        mostrarSeccion(dseccion);
+      }
+    });
+    }else{
+      alert('No hay productos en el carrito');
     }
+  });
 
-    const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-    const iva = subtotal * IVA_RATE;
-    const total = subtotal + iva;
-    const shippingAddress = defaultAddressRadio.checked ? savedAddress : newDireccionInput.value;
-    const note = specialNoteTextarea.value || 'Ninguna';
+    function renderBotonPayPal(containerId,precio,descripcion,moneda) {
+            paypal.Buttons({
+                createOrder: function(data,actions){
+                    return fetch('ajax/cliente.php?op=crearOrden',{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({
+                            precio,
+                            descripcion,
+                            moneda
+                        })
+                    }).then((res)=>{
+                        if (!res.ok) {
+                            throw new Error('Error al crear la orden');
+                        }
+                        return res.json();
+                    }).then((order)=>order.id).catch((err)=>{
+                        // notyf.error('Error al crear la orden: '+err.message);
+                        alert('Error al crear la orden: '+err.message)
+                        throw err;
+                    })
+                },
+                onApprove: function (data,actions){
+                    return fetch('ajax/cliente.php?op=capturaOrden',{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({
+                            orderID: data.orderID
+                        })
+                    }).then((res)=>{
+                        if(!res.ok){
+                            throw new Error('Error al capturar la orden');
+                        }
+                        return res.json();
+                    }).then((details)=>{
+                        // notyf.success('Pago completado por '+details.payer.name.given_name);
+                        alert('Pago completado por '+details.payer.name.given_name);
+                        //Habilitar botton de pedido
+                        $('#registrar_pedido').prop('disabled',false);
+                        
+                    }).catch((err)=>{
+                        // notyf.error('Error al capturar el pago: '+err.message);
+                        alert('Error al capturar el pago: '+err.message)
+                    });
+                },
+                onError: function(err){
+                    // notyf.error('Error en el proceso de pago: '+err.message);
+                    alert('Error al capturar el pago: '+err.message)
+                }
+            }).render(containerId);
+        };
+    
+    //Registrar pedido en base de datos
+    $('#registrar_pedido').click((e)=>{
+      e.preventDefault();
 
-    const confirmationMsg = `
-    ✅ ¡COMPRA EXITOSA! ✅
+      // Juntar datos para la base
+      let subtotal_pass= 0,total_pass= 0,index,idp;
+      let productosComprados=[];
+      let productoObj = {};
+      cart.forEach((item)=>{
+          subtotal_pass += item.price * item.qty;
+          index = allProducts.findIndex((element)=>element.title === item.title);
+          idp = parseInt(allProducts[index].id.split('p')[1]);
+          productoObj = {
+            idProducto:idp,
+            cantidad:item.qty
+          }
+          productosComprados.push(productoObj);
+        });
+      total_pass = (subtotal_pass * 0.16) + subtotal_pass;
+      let fechaVenta = new Date().toISOString().split('T')[0];
+      let productosJSON = JSON.stringify(productosComprados);
+      const postData = {
+        totalVenta: total_pass,
+        fechaV: fechaVenta,
+        productos: productosJSON,
+        metodoPago: 'Paypal',
+        nombrev:$("#pass_nombre").val(),
+        apellidopv:$("#pass_apellido").val(),
+        apellidomv:$("#pass_apellidom").val(),
+        direccionv:$("#pass_direccion").val(),
+        municipiov:$("#pass_municipio").val(),
+        estadov:$("#pass_estado").val(),
+        cod_postv:$("#pass_cod_post").val(),
+        celularv:$("#pass_celular").val(),
+        emailv:$("#pass_email").val(),
+        notav:$("#pass_notas").val()
+      }
+      $.ajax({
+        url:"ajax/cliente.php?op=registroVenta",
+        type:'POST',
+        data:postData,
+        success:(response)=>{
+          console.log('resposne: '+response)
+          alert(response);
 
-    Detalles del Pedido:
-    --------------------------
-    Subtotal: ${formatMoney(subtotal)}
-    IVA (16%): ${formatMoney(iva)}
-    Total Final: ${formatMoney(total)}
+          // Borrar el carrito
+          cart = [];
+          renderCart();
+          //Borrar la info de la pasarela 
+          $("#product_list_pass").empty(); //elimina los productos de la lista de la pasarela
+          $("#subtotal_pass").empty();//el subtotal de la lista de la pasarela
+          $("#iva_pass").empty();//el iva de la lista de la pasarela
+          $("#total_pass").empty();//el total de la lista de la pasarela
+          //Borrar los datos del formulario de pedido
+          $("#formDatosPedido").trigger('reset');//borra los campos del formulario
+          //Mostrar inicio
+          // mostrarSeccion('inicio');
+          window.location.href = 'index.php';
+        }
+      });
+      
+    });
 
-    Dirección de Envío:
-    --------------------------
-    ${shippingAddress}
-
-    Nota Especial (Horarios):
-    --------------------------
-    ${note}
-
-    Gracias por tu compra en Tlacuache Art. Tu pedido será procesado pronto.
-    `;
-
-    alert(confirmationMsg);
-
-    // Vaciar el carrito
-    cart = [];
-    renderCart();
-    cartOffcanvas.classList.remove("show");
-  }
-
-  // --- Asignar evento al botón "Finalizar compra" ---
-  document.querySelector(".checkout-btn").addEventListener("click", handleCheckout);
   init();
 });//fin del document ready

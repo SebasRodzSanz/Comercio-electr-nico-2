@@ -73,7 +73,7 @@ create table if not exists Envio(
     FechaEntrega DATE not null,
     Nota text,
     primary key (IdEnvio),
-    constraint fk_folioVenta_env foreign key (FolioVente) references Venta(FolioVenta)
+    constraint fk_folioVenta_env foreign key (FolioVenta) references Venta(FolioVenta)
 );
 
 -- tabla almacen

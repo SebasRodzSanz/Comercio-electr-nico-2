@@ -1,6 +1,5 @@
 <?php
 require_once "../modelo/Usuario.php";
-require_once "../modelo/PaypalP.php";
 $usuario = new Usuario ();
 
 #Verificamos y limpiamos. De lo contrario ponemos una cadena vacia
@@ -49,22 +48,7 @@ switch ($_GET['op']) {
             echo "ERROR, al iniciar sesión: datos vacios";
         }
     break;
-    case 'crearOrden':
-        $precio = isset($_POST['precio'])?limpiarCadenas($_POST['precio']):"";
-        $descripcion = isset($_POST['descripcion'])?limpiarCadenas($_POST['descripcion']):"";
-        $moneda = isset($_POST['moneda'])?limpiarCadenas($_POST['moneda']):"";
-        if(!empty($precio) && !empty($descripcion) && !empty($moneda)){
-            $payp = new PaypalP();
-            $payp->__crearOrden($precio,$moneda,$descripcion);
-        }
-    break;
-    case 'capturaOrden':
-        $orderID = isset($_POST['orderID'])?limpiarCadenas($_POST['orderID']):"";
-        if(!empty($precio)){
-            $payp = new PaypalP();
-            $payp->__capturarOrden($orderID);
-        }
-    break;
+    
     default:
         # code...
         break;
