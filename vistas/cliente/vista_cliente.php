@@ -516,7 +516,7 @@ fácilmente en la mente de los clientes.
 </div> -->
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="https://www.paypal.com/sdk/js?client-id=AQdwWeSjxuuQhxV6rOO_iLVi1DKLSAdwzkPjqEn7WKg0W8UJvISSwVVXAG8cpoIfC7S3h9hJKq9zzaFb&currency=MXN"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id={your client id}&currency=MXN"></script>
   <script src="./scripts/cliente.js"></script>
 </body>
 </html>
